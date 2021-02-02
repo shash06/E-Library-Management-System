@@ -1,0 +1,175 @@
+﻿@model ELMS_Client.Models.User
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+
+
+@if (Session["user"] == null)
+{
+    <p align="right">
+        <b>  @Html.ActionLink("Sign Up", "Register", "User", null, new { @style = "color:	#1a0000; font-size:22px; background-color:white" })</b>
+        &emsp;
+        <b> @Html.ActionLink("Login", "Login", "User", null, new { @style = "color:#1a0000; font-size:22px; background-color:white " })</b>
+
+    </p>
+}
+else
+{
+    <p align="right">
+        <b>  @Html.ActionLink("My Profile", "Details", "User", null, new { @style = "color:	#1a0000; font-size:22px; background-color:white" })</b>
+        &emsp;
+        <b> @Html.ActionLink("Logout", "Login", "User", null, new { @style = "color:#1a0000; font-size:22px; background-color:white " })</b>
+
+    </p>
+}
+<br />
+<br />
+<br />
+@if (Session["Info"] != null)
+        {
+            <div class='alert alert-info'><a class='close' data-dismiss='alert'>&times;</a>@Session["Info"]</div>
+            Session["Info"]= null;
+
+        }
+
+    <br />
+    <br />
+    <br />
+    <div style="background-color:tan; margin-right:600px; padding-left:20px">
+        <br />
+
+        <h2>Edit Profile</h2>
+
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @*@Html.LabelFor(model => model.User_id, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                    <div class="col-md-10">
+                        @Html.HiddenFor(model => model.User_id, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.User_id, "", new { @class = "text-danger" })
+                    </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Phone_Number, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Phone_Number, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Phone_Number, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Interest, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Interest, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Interest, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email_id, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Email_id, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Email_id, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @*@Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                        <div class="col-md-10">
+                            @Html.HiddenFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Bank_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div style="padding-top:5px" class="col-md-10">
+                            @Html.DropDownListFor(model => model.Bank_Name, new SelectList(new[] { "Axis Bank", "Bank of India", "HDFC", "ICICI", "SBI" }), "Select")
+                            @*@Html.EditorFor(model => model.Bank_Name, new { htmlAttributes = new { @class = "form-control" } })*@
+                            @Html.ValidationMessageFor(model => model.Bank_Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Credit_Card, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Credit_Card, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Credit_Card, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    @*<div class="form-group">
+                            @Html.LabelFor(model => model.Subscription, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.HiddenFor(model => model.Subscription, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Subscription, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+
+                    @*<div class="form-group">
+                            @Html.LabelFor(model => model.Admin, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Admin, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Admin, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <br />
+                            <input type="submit" value="Save" class="btn btn-default" />
+                        </div>
+                    </div>
+                    </div>
+                    }
+
+                    <div>
+                        <br />
+                        @Html.ActionLink("Home", "GetDocuments", "Document"@*new { @style = "color:	darkred;" }*@)
+
+                        <style>
+                            a {
+                                color: darkred;
+                            }
+
+                                a:hover {
+                                    color: black;
+                                }
+                        </style>
+                        &emsp;
+                        @Html.ActionLink("Delete Account", "Delete", "User", new { onclick = "return confirm('Are you sure you wish to delete your account?');" })
+                        <br />
+                        <br />
+                    </div>
+                    </div>
+
+                    @section Scripts {
+                        @Scripts.Render("~/bundles/jqueryval")
+                    }

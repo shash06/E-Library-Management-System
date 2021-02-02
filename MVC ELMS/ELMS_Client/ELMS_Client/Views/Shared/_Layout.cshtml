@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+
+    <style type="text/css">
+
+        .mylogo {
+            float: left;
+            margin-top: -15px;
+            margin-left: 10px;
+        }
+    </style>
+
+    <link href="~/Content/alertifyjs/alertify.min.css" rel="stylesheet" />
+    <link href="~/Content/alertifyjs/themes/default.min.css" rel="stylesheet" />
+</head>
+<body>
+    @*<h1 align="left" style="font-family:'Times New Roman', Times, serif;font-weight:bolder "><b>E-Library Management System</b></h1>*@
+    <a href="https://localhost:44323/Document/GetDocuments">
+        <img class="mylogo" id="1" src="~/Content/Image/logo1.png" width="27%" />
+
+    </a>
+    <div>
+
+    </div>
+
+
+    @*<div class="navbar navbar-inverse navbar-fixed-top" align="center">
+        <div class="container">
+            <div class="navbar-header" >
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h1>E-Library Management System</h1>
+                @Html.ActionLink("E-Library Management System", "Index", "Home", new { area = "" }, new { @class = "navbar-band" })
+            </div>*@
+    @*<div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                    </ul>
+                </div>
+            </div>
+        </div>*@
+
+    <div class="container body-content">
+        @RenderBody()
+        @*@RenderSection("scripts", required: false)*@
+        <hr />
+        @*<footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>*@
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/alertify.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

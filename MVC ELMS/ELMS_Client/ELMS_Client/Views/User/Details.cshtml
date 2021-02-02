@@ -1,0 +1,226 @@
+﻿@model ELMS_Client.Models.User
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+@if (Session["user"] == null)
+{
+    <p align="right">
+        <b>  @Html.ActionLink("Sign Up", "Register", "User", null, new { @style = "color:	#1a0000; font-size:22px; background-color:white" })</b>
+        &emsp;
+        <b> @Html.ActionLink("Login", "Login", "User", null, new { @style = "color:#1a0000; font-size:22px; background-color:white " })</b>
+
+    </p>
+}
+else
+{
+    <p align="right">
+
+        <b> @Html.ActionLink("Logout", "Login", "User", null, new { @style = "color:#1a0000; font-size:22px; background-color:white " })</b>
+
+    </p>
+}
+
+
+<br />
+<br />
+<br />
+
+@if (Session["Success"] != null)
+{
+    <div class='alert alert-success'><a class='close' data-dismiss='alert'>&times;</a>@Session["Success"]</div>
+    Session["Success"] = null;
+
+}
+
+<br />
+<br />
+<br />
+
+<div style="background-color:tan; margin-right:600px; padding-left:20px">
+    <br />
+
+    <h2>My Profile</h2>
+    <br />
+    <br />
+    <table border="0" class="table">
+        @*<div>
+
+            <hr />*@
+        @*<dl class="dl-horizontal">*@
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.User_id)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.User_id)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Name)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Name)
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Address)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Address)
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Phone_Number)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Phone_Number)
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Interest)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Interest)
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Email_id)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Email_id)
+            </td>
+        </tr>
+
+
+        @*<td>
+                @Html.DisplayNameFor(model => model.Password)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Password)
+            </td>*@
+
+        @if (Model.Credit_Card != null)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Bank_Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.Bank_Name)
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+                    @Html.DisplayNameFor(model => model.Credit_Card)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.Credit_Card)
+                </td>
+            </tr>
+
+
+
+        }
+        <tr>
+            <td>
+                @*@Html.DisplayNameFor(model => model.Subscription)*@
+                Status
+            </td>
+
+            <td>
+                @if ((Boolean)Session["subscription"])
+                {
+                    if ((Boolean)Session["admin"])
+                    {
+                        @Html.Label("Administrator")
+                    }
+                    else
+                    {
+                        @Html.Label("Subscriber")
+                    }
+                }
+                else
+                {
+                    @Html.Label("Non-Subscriber")
+                }
+                @*@Html.DisplayFor(model => model.Subscription)*@
+            </td>
+        </tr>
+
+
+        @*<td>
+                @Html.DisplayNameFor(model => model.Admin)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Admin)
+            </td>*@
+
+        @*</dl>*@
+        @*</div>*@
+    </table>
+
+    <p>
+        @if (!(Boolean)Session["admin"])
+        {
+            if ((Boolean)Session["subscription"])
+            {
+                <b>  @Html.ActionLink("End Subscription", "EditSubscription", "User"@*, new { @style = "color:darkred;" }*@)</b>
+            }
+            else
+            {
+                <b>  @Html.ActionLink("Buy Subscription", "EditSubscription", "User"@*, new { @style = "color:	darkred;" }*@)</b>
+            }
+        }
+
+
+        <br />
+        <br />
+        @Html.ActionLink("Edit Profile", "Edit", "User"@*, new { @style = "color:	darkred;" }*@)
+        &emsp;
+        @Html.ActionLink("Delete Account", "Delete", "User", new { onclick = "return confirm('Are you sure you wish to delete your account?');" })
+        &emsp;
+        @Html.ActionLink("Home", "GetDocuments", "Document"@*new { @style = "color:	darkred;" }*@)
+
+        <style>
+            a {
+                color: darkred;
+            }
+
+                a:hover {
+                    color: black;
+                }
+        </style>
+
+
+
+
+        <br />
+        <br />
+
+
+
+    </p>
+</div>

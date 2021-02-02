@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="libraryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Discipline">
+    <Key>
+      <PropertyRef Name="Discipline_Id" />
+    </Key>
+    <Property Name="Discipline_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Discipline_Name" Type="varchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Document_Details">
+    <Key>
+      <PropertyRef Name="Doc_id" />
+    </Key>
+    <Property Name="Doc_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="varchar" MaxLength="20" />
+    <Property Name="Description" Type="varchar" MaxLength="200" />
+    <Property Name="Discipline_id" Type="int" />
+    <Property Name="Author" Type="varchar" MaxLength="20" />
+    <Property Name="Date" Type="date" />
+    <Property Name="Price" Type="numeric" Precision="5" Scale="0" />
+    <Property Name="Doc_TypeId" Type="int" />
+  </EntityType>
+  <EntityType Name="Document_Type">
+    <Key>
+      <PropertyRef Name="Doc_TypeId" />
+    </Key>
+    <Property Name="Doc_TypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Doc_TypeName" Type="varchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User_Details">
+    <Key>
+      <PropertyRef Name="User_id" />
+    </Key>
+    <Property Name="User_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="Address" Type="varchar" MaxLength="70" />
+    <Property Name="Phone_Number" Type="bigint" />
+    <Property Name="Interest" Type="varchar" MaxLength="70" />
+    <Property Name="Email_id" Type="varchar" MaxLength="50" />
+    <Property Name="Password" Type="varchar" MaxLength="30" />
+    <Property Name="Bank_Name" Type="varchar" MaxLength="50" />
+    <Property Name="Credit_Card" Type="bigint" />
+    <Property Name="Subscription" Type="bit" />
+    <Property Name="Admin" Type="bit" />
+  </EntityType>
+  <Association Name="FK__Document___Disci__47DBAE45">
+    <End Role="Discipline" Type="Self.Discipline" Multiplicity="0..1" />
+    <End Role="Document_Details" Type="Self.Document_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Discipline">
+        <PropertyRef Name="Discipline_Id" />
+      </Principal>
+      <Dependent Role="Document_Details">
+        <PropertyRef Name="Discipline_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Document___Doc_T__48CFD27E">
+    <End Role="Document_Type" Type="Self.Document_Type" Multiplicity="0..1" />
+    <End Role="Document_Details" Type="Self.Document_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Document_Type">
+        <PropertyRef Name="Doc_TypeId" />
+      </Principal>
+      <Dependent Role="Document_Details">
+        <PropertyRef Name="Doc_TypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="libraryModelStoreContainer">
+    <EntitySet Name="Discipline" EntityType="Self.Discipline" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Document_Details" EntityType="Self.Document_Details" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Document_Type" EntityType="Self.Document_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User_Details" EntityType="Self.User_Details" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Document___Disci__47DBAE45" Association="Self.FK__Document___Disci__47DBAE45">
+      <End Role="Discipline" EntitySet="Discipline" />
+      <End Role="Document_Details" EntitySet="Document_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Document___Doc_T__48CFD27E" Association="Self.FK__Document___Doc_T__48CFD27E">
+      <End Role="Document_Type" EntitySet="Document_Type" />
+      <End Role="Document_Details" EntitySet="Document_Details" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

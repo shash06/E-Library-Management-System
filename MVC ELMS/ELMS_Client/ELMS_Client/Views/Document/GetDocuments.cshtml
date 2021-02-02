@@ -1,0 +1,223 @@
+﻿@using ELMS_Client.Models;
+@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<ELMS_Client.Models.Document>
+
+@{
+    ViewBag.Title = "GetDocuments";
+}
+
+
+<style>
+    a {
+        color: darkred;
+    }
+
+        a:hover {
+            color: black;
+        }
+</style>
+
+@if (Session["user"] == null)
+{
+
+    <p align="right">
+
+        <b>  @Html.ActionLink("Sign Up", "Register", "User", null, new { @style = "color:	#1a0000; font-size:22px; background-color:white" })</b>
+        &emsp;
+        <b> @Html.ActionLink("Login", "Login", "User", null, new { @style = "color:#1a0000; font-size:22px; background-color:white " })</b>
+
+    </p>
+}
+else
+{
+
+    <p align="right">
+
+        <br />
+        <b>  @Html.ActionLink(" Hello, " + @Session["name"], "Details", "User", null, new { @style = "color:	#1a0000; font-size:22px; background-color:white" })</b>
+        &emsp;
+        &emsp;
+        <b> @Html.ActionLink("Logout", "Login", "User", null, new { @style = "color:#1a0000; font-size:22px; background-color:white " })</b>
+
+    </p>
+}
+<br />
+<br />
+<br />
+
+@if (Session["Success"] != null)
+{
+    <div class='alert alert-success'><a class='close' data-dismiss='alert'>&times;</a>@Session["Success"]</div>
+    Session["Success"]= null;
+
+}
+<br />
+<br />
+<br />
+
+
+
+<div align="center">
+    @using (Html.BeginForm("GetDocuments", "Document", FormMethod.Get))
+    {
+
+        @Html.TextBox("myTitle", null, new { placeholder = "Title" })
+
+
+        @Html.TextBox("myAuthor", null, new { placeholder = "Author" })
+
+
+
+        <input type="submit" value="Search" class="btn btn-default" /><br /><br />
+    }
+</div>
+
+
+
+<style>
+    table, th, td {
+        border: 3px solid black;
+    }
+
+    th {
+        text-align: left;
+    }
+
+    th, td {
+        padding: 15px;
+    }
+
+    tr:nth-child(odd) {
+        background-color: beige;
+    }
+
+    tr:hover {
+        background-color: blanchedalmond;
+    }
+
+
+    th {
+        background-color: chocolate;
+        color: white;
+    }
+</style>
+
+<br />
+
+@if (Session["user"] != null && (Boolean)Session["admin"] == true)
+{
+    <p align="left">
+
+        <b> @Html.ActionLink("New Document", "Create", null, new { @style = "color:#1a0000; font-size:22px; background-color:white " })</b>
+
+    </p>
+}
+
+<table border="1" class="table" style="background-color:white">
+    <tr>
+        <th>
+            @Html.ActionLink("Title", "GetDocuments", new { sortBy = ViewBag.TitleSort, myTitle = Request.QueryString["myTitle"], myAuthor = Request.QueryString["myAuthor"] }, new { @style = "color: white;" })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Discipline_id)
+        </th>
+        <th>
+            @Html.ActionLink("Author", "GetDocuments", new
+            {
+                sortBy = ViewBag.AuthorSort,
+                myTitle = Request.QueryString["myTitle"],
+                myAuthor = Request.QueryString["myAuthor"]
+            }, new { @style = "color: white;" })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Price)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Discipline_id)*@
+                @foreach (Discipline disc in ViewBag.discipline)
+                {
+                    if (disc.Discipline_Id == item.Discipline_id)
+                    {
+                        <text>@disc.Discipline_Name</text>
+                    }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+
+                
+                @item.Date.ToString().Replace(" 12:00:00 AM", String.Empty)
+            </td>
+            <td>
+                @if (item.Price == 0 || item.Price == null)
+                {
+                    <text><b>FREE</b></text>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.Price)
+                }
+            </td>
+
+
+            @*@if (Session["subscription"] != null && (Boolean)Session["subscription"])
+                {
+                    <td>@item.Price * 0.8</td>
+                }*@
+            @*<td>
+                    @if (item.Doc_TypeId == 100)
+                    {
+                        @Html.Label("FREE")
+                    }
+                    else
+                    {
+                        @Html.Label("PREMIUM")
+                    }
+                    @Html.DisplayFor(modelItem => item.Doc_TypeId)
+                </td>*@
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.Doc_id })
+                @if (Session["user"] != null && (Boolean)Session["admin"] == true)
+                {
+                    @Html.ActionLink("Edit ", "Edit", new { id = item.Doc_id })
+
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Doc_id }, new { onclick = "return confirm('Are you sure you wish to delete this document?');" })
+
+
+
+                }
+
+            </td>
+        </tr>
+    }
+
+</table>
+<div align="center">
+    @Html.PagedListPager(Model, page => Url.Action("GetDocuments", new { page, myTitle = Request.QueryString["myTitle"], author = Request.QueryString["author"], SortBy = Request.QueryString["SortBy"] }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayPageCountAndCurrentLocation = true })
+</div>
+
+
+@Scripts.Render("~/bundles/jquery")

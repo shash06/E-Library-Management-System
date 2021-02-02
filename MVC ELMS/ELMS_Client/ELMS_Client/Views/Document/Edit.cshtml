@@ -1,0 +1,137 @@
+﻿@model ELMS_Client.Models.Document
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+
+
+@if (Session["user"] == null)
+{
+    <p align="right">
+        <b>  @Html.ActionLink("Sign Up", "Register", "User", null, new { @style = "color:	#1a0000; font-size:22px; background-color:white" })</b>
+        &emsp;
+        <b> @Html.ActionLink("Login", "Login", "User", null, new { @style = "color:#1a0000; font-size:22px; background-color:white " })</b>
+
+    </p>
+}
+else
+{
+    @*@User myUser = (User)Session["user"];*@
+    <p align="right">
+        <b>  @Html.ActionLink("My Profile", "Details", "User", null, new { @style = "color:	#1a0000; font-size:22px; background-color:white" })</b>
+        &emsp;
+        <b> @Html.ActionLink("Logout", "Login", "User", null, new { @style = "color:#1a0000; font-size:22px; background-color:white " })</b>
+
+    </p>
+}
+<br />
+<br />
+<br />
+<br />
+<br />
+<div style="background-color:tan; margin-right:600px; padding-left:20px">
+    <br />
+
+    <h2>Edit Document</h2>
+
+
+
+    <script src="~/Scripts/jquery.js"></script>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @*@Html.LabelFor(model => model.Doc_id, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.Doc_id, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Doc_id, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div  class="form-group">
+                @Html.LabelFor(model => model.Discipline_id, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div style="padding-top:5px" class="col-md-10">
+
+                    @Html.DropDownList("Discipline_Id", null, "Select Discipline")
+                    @Html.ValidationMessageFor(model => model.Discipline_id, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Author, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @*@Html.TextBoxFor(model => model.Date, new { type = "date" })*@
+                    @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}",new { @class="form-control input-sm datepicker",@type= "date", placeholder="date",id="txtDate",max=DateTime.Today.ToString("yyyy-MM-dd")})
+                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                @Html.LabelFor(model => model.Doc_TypeId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Doc_TypeId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Doc_TypeId, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <br/>
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+<div>
+    <br />
+    @Html.ActionLink("Home", "GetDocuments", "Document", new { @style = "color:	darkred;" })
+    &emsp;
+    @Html.ActionLink("Back to Details", "Details", "Document", new { id = Model.Doc_id  }, new { @style = "color:	darkred;" })
+    <br/>
+    <br/>
+</div>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

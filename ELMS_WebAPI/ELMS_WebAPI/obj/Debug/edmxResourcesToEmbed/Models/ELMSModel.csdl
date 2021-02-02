@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="libraryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Discipline">
+    <Key>
+      <PropertyRef Name="Discipline_Id" />
+    </Key>
+    <Property Name="Discipline_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Discipline_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Document_Details" Relationship="Self.FK__Document___Disci__47DBAE45" FromRole="Discipline" ToRole="Document_Details" />
+  </EntityType>
+  <EntityType Name="Document_Details">
+    <Key>
+      <PropertyRef Name="Doc_id" />
+    </Key>
+    <Property Name="Doc_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Discipline_id" Type="Int32" />
+    <Property Name="Author" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <Property Name="Price" Type="Decimal" Precision="5" Scale="0" />
+    <Property Name="Doc_TypeId" Type="Int32" />
+    <NavigationProperty Name="Discipline" Relationship="Self.FK__Document___Disci__47DBAE45" FromRole="Document_Details" ToRole="Discipline" />
+    <NavigationProperty Name="Document_Type" Relationship="Self.FK__Document___Doc_T__48CFD27E" FromRole="Document_Details" ToRole="Document_Type" />
+  </EntityType>
+  <EntityType Name="Document_Type">
+    <Key>
+      <PropertyRef Name="Doc_TypeId" />
+    </Key>
+    <Property Name="Doc_TypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Doc_TypeName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Document_Details" Relationship="Self.FK__Document___Doc_T__48CFD27E" FromRole="Document_Type" ToRole="Document_Details" />
+  </EntityType>
+  <EntityType Name="User_Details">
+    <Key>
+      <PropertyRef Name="User_id" />
+    </Key>
+    <Property Name="User_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="Phone_Number" Type="Int64" />
+    <Property Name="Interest" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="Email_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Bank_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Credit_Card" Type="Int64" />
+    <Property Name="Subscription" Type="Boolean" />
+    <Property Name="Admin" Type="Boolean" />
+  </EntityType>
+  <Association Name="FK__Document___Disci__47DBAE45">
+    <End Role="Discipline" Type="Self.Discipline" Multiplicity="0..1" />
+    <End Role="Document_Details" Type="Self.Document_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Discipline">
+        <PropertyRef Name="Discipline_Id" />
+      </Principal>
+      <Dependent Role="Document_Details">
+        <PropertyRef Name="Discipline_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Document___Doc_T__48CFD27E">
+    <End Role="Document_Type" Type="Self.Document_Type" Multiplicity="0..1" />
+    <End Role="Document_Details" Type="Self.Document_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Document_Type">
+        <PropertyRef Name="Doc_TypeId" />
+      </Principal>
+      <Dependent Role="Document_Details">
+        <PropertyRef Name="Doc_TypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="libraryEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Disciplines" EntityType="Self.Discipline" />
+    <EntitySet Name="Document_Details" EntityType="Self.Document_Details" />
+    <EntitySet Name="Document_Type" EntityType="Self.Document_Type" />
+    <EntitySet Name="User_Details" EntityType="Self.User_Details" />
+    <AssociationSet Name="FK__Document___Disci__47DBAE45" Association="Self.FK__Document___Disci__47DBAE45">
+      <End Role="Discipline" EntitySet="Disciplines" />
+      <End Role="Document_Details" EntitySet="Document_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Document___Doc_T__48CFD27E" Association="Self.FK__Document___Doc_T__48CFD27E">
+      <End Role="Document_Type" EntitySet="Document_Type" />
+      <End Role="Document_Details" EntitySet="Document_Details" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

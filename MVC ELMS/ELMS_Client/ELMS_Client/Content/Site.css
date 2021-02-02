@@ -1,0 +1,29 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    /*background-image: url('Image/getty_496612468_2000138820009280460_336567.jpg');*/
+    background: url('Image/1_YAaAjBYEDVI7ynN588t8fg.jpeg');
+    /*background-repeat: no-repeat;*/
+    
+    /*background-image: url('Image/getty_508400521_2000133320009280263_305526.jpg');*/
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.form-body{
+    background:rgba(19,35,47,0.9);
+    padding:20px 40px;
+    max-width:600px;
+    margin:30px auto;
+    box-shadow:0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}

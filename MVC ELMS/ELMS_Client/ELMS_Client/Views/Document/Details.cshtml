@@ -1,0 +1,188 @@
+﻿@model ELMS_Client.Models.Document
+@using ELMS_Client.Models
+@{
+    ViewBag.Title = "Details";
+}
+
+<style>
+    a {
+        color: darkred;
+    }
+
+        a:hover {
+            color: black;
+        }
+</style>
+
+
+
+
+@if (Session["user"] == null)
+{
+    <p align="right">
+        <b>  @Html.ActionLink("Sign Up", "Register", "User", null, new { @style = "color:	#1a0000; font-size:22px; background-color:white" })</b>
+        &emsp;
+        <b> @Html.ActionLink("Login", "Login", "User", null, new { @style = "color:#1a0000; font-size:22px; background-color:white " })</b>
+
+    </p>
+}
+else
+{
+    <p align="right">
+        <b>  @Html.ActionLink("My Profile", "Details", "User", null, new { @style = "color:	#1a0000; font-size:22px; background-color:white" })</b>
+        &emsp;
+        <b> @Html.ActionLink("Logout", "Login", "User", null, new { @style = "color:#1a0000; font-size:22px; background-color:white " })</b>
+
+    </p>
+}
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<div style="background-color:tan; margin-right:600px; padding-left:20px">
+    <br />
+
+    <h2>Details</h2>
+    <br />
+    <br />
+
+    <table border="0" class="table">
+
+        @*<div>*@
+
+        @*<hr />*@
+        @*<dl class="dl-horizontal">*@
+        <tr>
+
+
+            <td>
+                @Html.DisplayNameFor(model => model.Doc_id)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Doc_id)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Title)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Title)
+            </td>
+        </tr>
+        <tr>
+
+            <td>
+                @Html.DisplayNameFor(model => model.Description)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Description)
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Discipline_id)
+            </td>
+
+            <td>
+                @*@Html.DisplayFor(model => model.Discipline_id)*@
+                @foreach (Discipline disc in ViewBag.discipline)
+                {
+                    if (disc.Discipline_Id == Model.Discipline_id)
+                    {
+                        <text>@disc.Discipline_Name</text>
+                    }
+                }
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Author)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Author)
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Date)
+
+            </td>
+
+            <td>
+                @*@Html.DisplayFor(model => model.Date)*@
+                @Model.Date.ToString().Replace(" 12:00:00 AM", String.Empty)
+            </td>
+        </tr>
+
+        @if (Model.Doc_TypeId == 101)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Price)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.Price)
+                </td>
+            </tr>
+
+            if (Session["subscription"] != null && (Boolean)Session["subscription"])
+            {
+                <tr>
+                    <td>Discounted Price</td>
+                    <td>@ViewBag.discount</td>
+                </tr>
+
+            }
+        }
+
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Doc_TypeId)
+            </td>
+
+            <td>
+                @if (Model.Doc_TypeId == 100)
+                {
+                    <text>FREE</text>
+                }
+                else
+                {
+                    <text>PREMIUM</text>
+                }
+                @*@Html.DisplayFor(model => model.Doc_TypeId)*@
+            </td>
+
+        </tr>
+
+    </table>
+
+    @*</dl>*@
+    @*</div>*@
+    <p>
+        <b> @Html.ActionLink("Download", "Download", new { id = Model.Doc_TypeId }, new { @style = "color:	darkred;" })</b>
+        <br />
+        <br />
+        @if (Session["user"] != null && (Boolean)Session["admin"])
+        {
+            @Html.ActionLink("Edit\t", "Edit", new { id = Model.Doc_id }, new { @style = "color:	darkred;" })
+
+            @Html.ActionLink("     Delete", "Delete", new { id = Model.Doc_id }, new { onclick = "return confirm('Are you sure you wish to delete this document?');" })
+        }
+        &emsp;
+        @Html.ActionLink("Home", "GetDocuments", "Documents", new { @style = "color:	darkred;" })
+        <br />
+        <br />
+    </p>
+</div>
